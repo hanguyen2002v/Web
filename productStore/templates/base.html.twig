@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Online Apple Store
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle`
+																																																																																																																																																																																																				           and uncomment the following Encore helpers to start using Symfony UX #}
+		{% block stylesheets %}
+			<!-- CSS only -->
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+		{% endblock %}
+
+		{% block javascripts %}
+			<!-- JavaScript Bundle with Popper -->
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+		{% endblock %}
+	</head>
+	<body>
+		{% block header %}
+			{% if is_granted ('ROLE_ADMIN') %}
+				<div class="container mt-12 mb-4">
+					<ul class="nav justify-content-center bg-light">
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path('home')}}">Home</a>
+						</li>
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path ('product_index')}}">Product Management</a>
+						</li>
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path ('category_index')}}">Category Management</a>
+						</li>
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path ('order_view')}}">Order Management</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_login')}}">
+								<i>
+									<u>Logout</u>
+								</i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			{% else %}
+				<!--ROLE_CUSTOMER-->
+				<div class="container mt-12 mb-4 bg-light d-flex justify-content-between">
+					<ul class="nav justify-content-center">
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path('home')}}">Home</a>
+						</li>
+						<li class="nav-item h4">
+							<a class="nav-link" href="{{path('product_list')}}">Product</a>
+						</li>
+					</ul>
+					<div class="search-card d-flex">
+						<form class="d-flex align-items-center" action="{{path('search_product_name')}}" method="post">
+							<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
+						</form>
+						<div class="dropdown d-flex align-items-center" style="padding-left:15px">
+							<a class="ac-gn-link ac-gn-bag h3" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="bi bi-bag"></i>
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bag" viewbox="0 0 16 16">
+									<path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+								</svg>
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<li>
+									<a class="dropdown-item" href="{{path('app_login')}}">Login</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{path('order_list')}}">My Order</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{path('app_logout')}}">Logout({{app.user ? app.user.username}})</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endblock %}
+
+		{% block flash %}
+			<div class="container col-md-5 text-center mt-3 mb-3">
+				{% for flash in app.session.flashBag.get('Warning') %}
+					<p class="alert alert-danger">{{ flash }}</p>
+				{% endfor %}
+				{% for flash in app.session.flashBag.get('Info') %}
+					<p class="alert alert-success">{{ flash }}</p>
+				{% endfor %}
+			</div>
+		{% endblock %}
+
+		{% block body %}{% endblock %}
+
+		{% block footer %}
+			<div class="container">
+				<footer class="py-3 my-4 border-top">
+					<p class="text-center text-muted">Address: 101 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+					<p class="text-center text-muted">Phone: 09412132145</p>
+				</footer>
+			</div>
+		{% endblock %}
+	</body>
+</html>

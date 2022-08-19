@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="container col-md-8 text-center mt-4">
+		<div class="card-group mt-3">
+			<div class="row d-flex justify-content-around">
+				{% for product in product %}
+					<div class="col-md-4 mt-3 bg-light justify-content-around ">
+						<div class="card-img-top">
+							<a href="{{path('product_detail', {'id': product.id})}}">
+								<img src="{{product.image}}" alt="" width="120" height="120">
+							</a>
+						</div>
+						<div class="card-name">
+							<h5 class="alert alert-heading">{{ product.name }}</h5>
+						</div>
+						<div class="card-subtitle">
+							<h4 class="text text-primary">{{ product.price }}$</h4>
+						</div>
+						<div class="card-footer">
+							<form action="{{ path('add_to_cart')}}" method="post">
+								<div class="form-group mb-3">
+									<input type="number" name="quantity" min="1" max="{{ product.quantity }}">
+								</div>
+								<input type="hidden" name="id" value="{{ product.id }}">
+								<input class="btn btn-success" type="submit" value="Order"/>
+							</form>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

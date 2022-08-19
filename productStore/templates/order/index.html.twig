@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% set product = app.session.get('product') %}
+	{% set user = app.session.get('user') %}
+	{% set date = app.session.get('datetime') %}
+	{% set quantity = app.session.get('quantity') %}
+	{% set totalprice = app.session.get('totalprice') %}
+	<div class="container text-center mt-3">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Customer name</td>
+					<td>Product Name</td>
+					<td>Order Date</td>
+					<td>Order Quantity</td>
+					<td>Product Price</td>
+					<td>Total Price</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{user.username}}</td>
+					<td>{{product.name}}</td>
+					<td>{{date | date('d/m/Y H:i')}}</td>
+					<td>{{quantity}}</td>
+					<td>{{product.price}}</td>
+					<td>{{totalprice}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

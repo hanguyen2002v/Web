@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="container col-md-12 text-center mt-3">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-body">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								{# <th>Name Order</th> #}
+								<th>Product Name</th>
+								<th>Order Quantity</th>
+								<th>Total Price</th>
+								<th>Order Date</th>
+							</tr>
+							{% for order in order %}
+								{% if order.user.username == app.user.username%}
+									<tr>
+										{# <td class="text text-success">{{order.user.name}}</td> #}
+										<td class="text text-success">{{order.product.name}}</td>
+										<td class="text text-success">{{order.quantity}}</td>
+										<td class="text text-success">{{order.totalprice}}</td>
+										<td class="text text-success">{{order.datetime | date('d/m/Y')}}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
